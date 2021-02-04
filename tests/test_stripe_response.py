@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 import json
 from collections import OrderedDict
 
-from stripe import six
 from stripe.stripe_response import StripeResponse
 
 
@@ -34,8 +33,8 @@ class TestStripeResponse(object):
         assert response.data == deserialized
 
         # Previous assert does not check order, so explicitly check order here
-        assert list(six.iterkeys(response.data["metadata"])) == list(
-            six.iterkeys(deserialized["metadata"])
+        assert list(response.data["metadata"].keys()) == list(
+            deserialized["metadata"].keys()
         )
 
     @staticmethod
