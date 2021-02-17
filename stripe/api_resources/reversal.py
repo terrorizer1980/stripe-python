@@ -1,6 +1,5 @@
 from __future__ import absolute_import, division, print_function
 
-from stripe import util
 from stripe.api_resources.abstract import UpdateableAPIResource
 from stripe.api_resources.transfer import Transfer
 from urllib.parse import quote_plus
@@ -10,11 +9,9 @@ class Reversal(UpdateableAPIResource):
     OBJECT_NAME = "transfer_reversal"
 
     def instance_url(self):
-        token = util.utf8(self.id)
-        transfer = util.utf8(self.transfer)
         base = Transfer.class_url()
-        cust_extn = quote_plus(transfer)
-        extn = quote_plus(token)
+        cust_extn = quote_plus(self.transfer)
+        extn = quote_plus(self.id)
         return "%s/%s/reversals/%s" % (base, cust_extn, extn)
 
     @classmethod

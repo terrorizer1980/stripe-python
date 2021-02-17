@@ -1,6 +1,5 @@
 from __future__ import absolute_import, division, print_function
 
-from stripe import util
 from stripe.api_resources.abstract import DeletableAPIResource
 from stripe.api_resources.abstract import UpdateableAPIResource
 from stripe.api_resources.customer import Customer
@@ -12,9 +11,7 @@ class AlipayAccount(DeletableAPIResource, UpdateableAPIResource):
 
     @classmethod
     def _build_instance_url(cls, customer, sid):
-        token = util.utf8(sid)
-        extn = quote_plus(token)
-        customer = util.utf8(customer)
+        extn = quote_plus(sid)
 
         base = Customer.class_url()
         owner_extn = quote_plus(customer)

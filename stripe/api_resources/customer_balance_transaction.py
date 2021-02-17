@@ -1,6 +1,5 @@
 from __future__ import absolute_import, division, print_function
 
-from stripe import util
 from stripe.api_resources.customer import Customer
 from stripe.api_resources.abstract import APIResource
 from urllib.parse import quote_plus
@@ -10,11 +9,9 @@ class CustomerBalanceTransaction(APIResource):
     OBJECT_NAME = "customer_balance_transaction"
 
     def instance_url(self):
-        token = util.utf8(self.id)
-        customer = util.utf8(self.customer)
         base = Customer.class_url()
-        cust_extn = quote_plus(customer)
-        extn = quote_plus(token)
+        cust_extn = quote_plus(self.customer)
+        extn = quote_plus(self.id)
         return "%s/%s/balance_transactions/%s" % (base, cust_extn, extn)
 
     @classmethod

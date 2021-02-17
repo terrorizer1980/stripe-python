@@ -14,34 +14,27 @@ class Card(DeletableAPIResource, UpdateableAPIResource):
     OBJECT_NAME = "card"
 
     def instance_url(self):
-        token = util.utf8(self.id)
-        extn = quote_plus(token)
+        extn = quote_plus(self.id)
         if hasattr(self, "customer"):
-            customer = util.utf8(self.customer)
-
             base = Customer.class_url()
-            owner_extn = quote_plus(customer)
+            owner_extn = quote_plus(self.customer)
             class_base = "sources"
 
         elif hasattr(self, "recipient"):
-            recipient = util.utf8(self.recipient)
-
             base = Recipient.class_url()
-            owner_extn = quote_plus(recipient)
+            owner_extn = quote_plus(self.recipient)
             class_base = "cards"
 
         elif hasattr(self, "account"):
-            account = util.utf8(self.account)
-
             base = Account.class_url()
-            owner_extn = quote_plus(account)
+            owner_extn = quote_plus(self.account)
             class_base = "external_accounts"
 
         else:
             raise error.InvalidRequestError(
                 "Could not determine whether card_id %s is "
                 "attached to a customer, recipient, or "
-                "account." % token,
+                "account." % self.id,
                 "id",
             )
 

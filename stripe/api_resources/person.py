@@ -10,11 +10,9 @@ class Person(UpdateableAPIResource):
     OBJECT_NAME = "person"
 
     def instance_url(self):
-        token = util.utf8(self.id)
-        account = util.utf8(self.account)
         base = Account.class_url()
-        acct_extn = quote_plus(account)
-        extn = quote_plus(token)
+        acct_extn = quote_plus(self.account)
+        extn = quote_plus(self.id)
         return "%s/%s/persons/%s" % (base, acct_extn, extn)
 
     @classmethod
